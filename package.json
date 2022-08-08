@@ -1,0 +1,25 @@
+{
+  "name": "bombermanos",
+  "version": "1.0.0",
+  "description": "Game utilizando react, tailwind, typescript, redis e postgres",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuisGustavoCZP/BomberManos.git"
+  },
+  "author": "Luis Gustavo CZP",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LuisGustavoCZP/BomberManos/issues"
+  },
+  "homepage": "https://github.com/LuisGustavoCZP/BomberManos#readme",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "ioredis": "^5.2.2",
+    "pg": "^8.7.3"
+  }
+}

@@ -1,0 +1,44 @@
+image: gitpod/workspace-postgres
+
+ports:
+  - port: 8001
+    onOpen: ignore
+    visibility: private
+  - port: 6379
+    onOpen: ignore
+    visibility: private
+  - port: 8000
+    visibility: public
+    onOpen: open-browser
+  - port: 5432
+    onOpen: ignore
+
+tasks:
+  - name: Start Redis Stack
+    init: |
+     docker-compose pull
+    command: |
+     alias redis-cli="docker exec -it redis-stack redis-cli" 
+     echo "Use redis-cli to interact with Redis here."
+     docker-compose up -d
+     gp sync-done finished
+    openMode: tab-after
+    
+  - name: Start Postgres Stack
+    init: |
+     psql -h localhost -U gitpod -f sql/start.sql
+    openMode: tab-after
+    
+  - name: Start Node Stack
+    init: | 
+     npm i
+    command: npm run start
+    openMode: tab-after
+    env:
+      PORT: 8000
+      POSTGRES_CONNECTION_STRING: postgres://gitpod@localhost/bombermanos
+github: 
+  prebuilds:
+    master: true
+    branches: true
+    pullRequests: true
