@@ -53,9 +53,9 @@ app.get ("/postgres", (req, res) =>
     const requests = [];
     for(let i = 0; i < total; i++)
     {
-        requests.push(async () => 
+        requests.push((resolve) => 
         { 
-            await db.query('SELECT * FROM users'); 
+            db.query('SELECT * FROM users').then(resolve); 
         });
     }
 
