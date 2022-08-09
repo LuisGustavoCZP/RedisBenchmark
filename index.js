@@ -45,7 +45,7 @@ function testeComputing ()
     if(count == total) testeFinish ();
 }
 
-app.get ("/postgres", (req, res) =>
+app.get ("/postgres", async (req, res) =>
 {
     resReq = res;
     mode = "Postgres";
@@ -66,7 +66,7 @@ app.get ("/postgres", (req, res) =>
     res.send(s);
 });
 
-app.get ("/redis", (req, res) =>
+app.get ("/redis", async (req, res) =>
 {
     resReq = res;
     mode = "Redis";
