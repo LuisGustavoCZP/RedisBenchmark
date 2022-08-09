@@ -71,11 +71,20 @@ app.get ("/redis", async (req, res) =>
     resReq = res;
     mode = "Redis";
     total = Number(req.query.tests);
+    const requests = [];
     for(let i = 0; i < total; i++)
     {
-        redis.lrange("users", 0, -1).then(testeComputing);
+        requests.push((resolve) => 
+        { 
+            redis.lrange("users", 0, -1).then(resolve);
+        });
     }
+    
     initTime = performance.now();
+    await Promise.all(requests);
+    const f = performance.now() - initTime;
+    const s = `Performance of ${mode}(${total/1000}K) = ${f}ms`;
+    res.send(s);
 });
 
 app.get ("/", async (req, res) =>
