@@ -53,10 +53,10 @@ app.get ("/postgres", async (req, res) =>
     const requests = [];
     for(let i = 0; i < total; i++)
     {
-        requests.push((resolve) => 
+        requests.push(new Promise ((resolve) =>
         { 
             db.query('SELECT * FROM users').then(resolve); 
-        });
+        }));
     }
 
     initTime = performance.now();
@@ -74,12 +74,12 @@ app.get ("/redis", async (req, res) =>
     const requests = [];
     for(let i = 0; i < total; i++)
     {
-        requests.push((resolve) => 
+        requests.push(new Promise ((resolve) => 
         { 
             redis.lrange("users", 0, -1).then(resolve);
-        });
+        }));
     }
-    
+
     initTime = performance.now();
     await Promise.all(requests);
     const f = performance.now() - initTime;
