@@ -63,6 +63,7 @@ app.get ("/postgres", (req, res) =>
     await Promise.all(requests);
     const f = performance.now() - initTime;
     const s = `Performance of ${mode}(${total/1000}K) = ${f}ms`;
+    res.send(s);
 });
 
 app.get ("/redis", (req, res) =>
