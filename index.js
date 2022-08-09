@@ -50,11 +50,19 @@ app.get ("/postgres", (req, res) =>
     resReq = res;
     mode = "Postgres";
     total = Number(req.query.tests);
+    const requests = [];
     for(let i = 0; i < total; i++)
     {
-        db.query('SELECT * FROM users').then(testeComputing);
+        requests.push(async () => 
+        { 
+            await db.query('SELECT * FROM users'); 
+        });
     }
+
     initTime = performance.now();
+    await Promise.all(requests);
+    const f = performance.now() - initTime;
+    const s = `Performance of ${mode}(${total/1000}K) = ${f}ms`;
 });
 
 app.get ("/redis", (req, res) =>
